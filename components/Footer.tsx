@@ -9,7 +9,8 @@ const links = [
     { name: "Universe", href: "/universe" },
     { name: "System", href: "/system" },
     { name: "Singularity", href: "/singularity" },
-    { name: "Horizon", href: "/horizon" }
+    { name: "Horizon", href: "/horizon" },
+    { name: "Events", href: "/events" },
 ];
 
 export default function Footer() {

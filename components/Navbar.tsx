@@ -58,6 +58,10 @@ export default function Navbar() {
                     <Link href="/horizon" className="font-grotesk text-[10px] uppercase tracking-[0.45em] text-white/40 hover:text-white transition-colors duration-300">
                         Horizon
                     </Link>
+                    <div className="w-[1px] h-3 bg-white/20" />
+                    <Link href="/events" className="font-grotesk text-[10px] uppercase tracking-[0.45em] text-white/40 hover:text-white transition-colors duration-300">
+                        Events
+                    </Link>
                 </div>
 
                 {/* Live indicator dot */}
