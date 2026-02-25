@@ -76,7 +76,7 @@ export default function LoadingScreen({ totalFrames = 500, onComplete }: Loading
                         transition={{ duration: 0.8, delay: 0.1 }}
                         className="font-bebas text-[clamp(2rem,6vw,3.5rem)] text-liquid-metal tracking-[0.2em] mb-12 select-none"
                     >
-                        SYNALPY
+                        HORIZON
                     </motion.p>
 
                     {/* Progress bar track */}

@@ -30,10 +30,9 @@ export default function Navbar() {
                 <div className="ambient-spot w-40 h-40 -left-10 -top-10 opacity-[0.04]"
                     style={{ background: "white" }} />
 
-                {/* Left side: Logo */}
                 <Link href="/" className="flex items-center gap-3 relative z-10 group">
                     <span className="font-bebas text-2xl tracking-widest text-white mt-1">
-                        SYNALPY
+                        HORIZON
                     </span>
                 </Link>
 

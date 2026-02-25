@@ -51,7 +51,7 @@ export default function Footer() {
                     transition={{ duration: 1.1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
                     className="font-bebas text-[clamp(4rem,14vw,9rem)] text-liquid-metal leading-none tracking-[0.1em]"
                 >
-                    SYNALPY
+                    HORIZON
                 </motion.div>
 
                 {/* Glow separator */}
