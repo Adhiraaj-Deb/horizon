@@ -8,8 +8,8 @@ const bebas = Bebas_Neue({ subsets: ["latin"], weight: "400", variable: "--font-
 const grotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-grotesk" });
 
 export const metadata: Metadata = {
-    title: "The Event Horizon | Synalpy",
-    description: "A cinematic exploration of space and the unknown.",
+    title: "The Event Horizon | HORIZON",
+    description: "An interactive journey through the cosmos.",
 };
 
 export default function RootLayout({

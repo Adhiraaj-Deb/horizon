@@ -6,7 +6,7 @@ const phrases = [
     { text: "Beyond Light.", label: "Speed of Light / 299,792 km/s", range: [0, 0.08, 0.13, 0.17] as const },
     { text: "Beyond Time.", label: "Event Horizon / Temporal Dilation", range: [0.17, 0.24, 0.28, 0.32] as const },
     { text: "Beyond Understanding.", label: "Singularity / Physics Undefined", range: [0.32, 0.39, 0.43, 0.47] as const },
-    { text: "The Event Horizon.", label: "Synalpy — 2026", range: [0.47, 0.54, 0.65, 0.70] as const },
+    { text: "The Event Horizon.", label: "HORIZON — 2026", range: [0.47, 0.54, 0.65, 0.70] as const },
 ];
 
 function PhraseLayer({ text, label, range }: { text: string; label: string; range: readonly [number, number, number, number] }) {

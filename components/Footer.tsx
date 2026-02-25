@@ -106,15 +106,25 @@ export default function Footer() {
                     ))}
                 </div>
 
-                {/* Copyright */}
-                <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={inView ? { opacity: 1 } : {}}
-                    transition={{ duration: 1, delay: 0.9 }}
-                    className="font-grotesk text-[10px] text-white/10 tracking-widest mt-2"
-                >
-                    © 2026 Synalpy — All Rights Reserved
-                </motion.p>
+                {/* Copyright & Studio Credit */}
+                <div className="flex flex-col items-center gap-2 mt-2">
+                    <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={inView ? { opacity: 1 } : {}}
+                        transition={{ duration: 1, delay: 0.9 }}
+                        className="font-grotesk text-[10px] text-white/10 tracking-widest"
+                    >
+                        © {new Date().getFullYear()} HORIZON — All Rights Reserved
+                    </motion.p>
+                    <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={inView ? { opacity: 1 } : {}}
+                        transition={{ duration: 1, delay: 1 }}
+                        className="font-grotesk text-[9px] uppercase tracking-[0.4em] text-white/20"
+                    >
+                        Made by Studio Synalpy
+                    </motion.p>
+                </div>
             </div>
         </footer>
     );
