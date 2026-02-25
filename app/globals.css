@@ -1,0 +1,211 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+  --glass-bg: rgba(255, 255, 255, 0.035);
+  --glass-border: rgba(255, 255, 255, 0.09);
+  --glow-white: rgba(255, 255, 255, 0.55);
+}
+
+html,
+body {
+  background: var(--background);
+  color: var(--foreground);
+  overflow-x: clip;
+  overscroll-behavior: none;
+  margin: 0;
+  padding: 0;
+}
+
+::selection {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #2a2a2a, #555);
+  border-radius: 4px;
+}
+
+canvas {
+  image-rendering: crisp-edges;
+}
+
+/* ============================================================
+   LIQUID METAL TEXT
+   ============================================================ */
+.text-liquid-metal {
+  background: linear-gradient(120deg,
+      #555555 0%,
+      #c8c8c8 16%,
+      #ffffff 28%,
+      #787878 42%,
+      #e0e0e0 56%,
+      #ffffff 68%,
+      #999999 82%,
+      #d0d0d0 100%);
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: liquid-shift 6s linear infinite;
+}
+
+@keyframes liquid-shift {
+  0% {
+    background-position: 0% center;
+  }
+
+  100% {
+    background-position: 250% center;
+  }
+}
+
+/* ============================================================
+   GLASS CARD
+   ============================================================ */
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+}
+
+/* Animated shimmer border */
+.glass-card-glow {
+  position: relative;
+}
+
+.glass-card-glow::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(130deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.18) 40%,
+      rgba(255, 255, 255, 0.08) 60%,
+      transparent 80%);
+  background-size: 300% 300%;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  animation: border-shimmer 4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes border-shimmer {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* ============================================================
+   GLOW LINE SEPARATOR
+   ============================================================ */
+.glow-line {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+}
+
+/* ============================================================
+   AMBIENT SPOT UTILITY
+   ============================================================ */
+.ambient-spot {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+/* ============================================================
+   SCAN LINE OVERLAY
+   ============================================================ */
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(to bottom,
+      transparent 0px,
+      transparent 3px,
+      rgba(0, 0, 0, 0.08) 3px,
+      rgba(0, 0, 0, 0.08) 4px);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ============================================================
+   FADE-UP UTILITY
+   ============================================================ */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+    filter: blur(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ============================================================
+   FLOATING PARTICLE DOTS
+   ============================================================ */
+@keyframes float-dot {
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.15;
+  }
+
+  50% {
+    transform: translateY(-18px) scale(1.3);
+    opacity: 0.35;
+  }
+}
+
+/* ============================================================
+   NUMBER COUNTER SHIMMER
+   ============================================================ */
+.counter-text {
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(135deg, #888 0%, #fff 50%, #888 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: liquid-shift 3s linear infinite;
+}
