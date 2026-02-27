@@ -3,6 +3,15 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef } from "react";
 import Navbar from "@/components/Navbar";
+import { APIProvider } from '@vis.gl/react-google-maps';
+
+declare global {
+    namespace JSX {
+        interface IntrinsicElements {
+            'gmp-map-3d': any;
+        }
+    }
+}
 
 type ViewMode = "system" | "earth";
 
@@ -66,16 +75,25 @@ export default function SystemPage() {
                             onLoad={() => setLoading(false)}
                         />
                     ) : (
-                        <motion.iframe
+                        <motion.div
                             key="earth"
                             initial={{ opacity: 0, scale: 1.05 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0 }}
                             transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
-                            src="https://eyes.nasa.gov/apps/earth/?embed=true"
-                            className="w-full h-full border-none outline-none"
-                            onLoad={() => setLoading(false)}
-                        />
+                            className="w-full h-full"
+                        >
+                            <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ""} version="alpha" libraries={["maps3d"]}>
+                                <div className="w-full h-full relative overflow-hidden bg-black">
+                                    <gmp-map-3d
+                                        center="40.7580,-73.9855,800"
+                                        tilt="65"
+                                        heading="12"
+                                        style={{ width: '100%', height: '100%', outline: 'none' }}
+                                    />
+                                </div>
+                            </APIProvider>
+                        </motion.div>
                     )}
                 </AnimatePresence>
             </div>
