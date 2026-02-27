@@ -72,7 +72,7 @@ export default function SystemPage() {
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0 }}
                             transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
-                            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d100000000!2d0!3d0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sus!4v1715000000000!5m2!1sen!2sus&maptype=satellite"
+                            src="https://eyes.nasa.gov/apps/earth/?embed=true"
                             className="w-full h-full border-none outline-none"
                             onLoad={() => setLoading(false)}
                         />
