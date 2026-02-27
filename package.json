@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@vis.gl/react-google-maps": "^1.7.1",
     "autoprefixer": "^10.4.24",
     "framer-motion": "latest",
     "lucide-react": "^0.575.0",
