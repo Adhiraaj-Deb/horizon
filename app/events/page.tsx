@@ -261,7 +261,8 @@ export default function EventsPage() {
                             {/* NASA Meteor live data / Fireball dashboard on the other */}
                             <iframe
                                 src="https://eyes.nasa.gov/apps/meteor/?embed=true"
-                                className="absolute right-0 w-[45%] h-full border-none"
+                                className={`absolute right-0 h-full border-none transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${sidebarOpen ? 'w-[calc(45%-170px)]' : 'w-[45%]'
+                                    }`}
                                 onError={() => { }}
                             />
                         </motion.div>
@@ -276,8 +277,11 @@ export default function EventsPage() {
                                 ? `https://eyes.nasa.gov/apps/solar-system/?embed=true&time=${encodeURIComponent(selectedEvent.date.toISOString().replace('Z', '+00:00'))}&rate=0#/${selectedEvent.nasaTarget}`
                                 : "https://eyes.nasa.gov/apps/solar-system/?embed=true"
                             }
-                            className="absolute h-full border-none"
-                            style={{ left: '-400px', width: 'calc(100% + 400px)' }}
+                            className="absolute h-full border-none transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                            style={{
+                                left: sidebarOpen ? '-200px' : '0px',
+                                width: sidebarOpen ? 'calc(100% + 200px)' : '100%',
+                            }}
                         />
                     )}
                 </AnimatePresence>
