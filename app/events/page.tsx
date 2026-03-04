@@ -227,6 +227,13 @@ export default function EventsPage() {
         return () => clearInterval(interval);
     }, []);
 
+    // Listen for mobile hamburger menu clicks from Navbar
+    useEffect(() => {
+        const handleToggleSidebar = () => setSidebarOpen(v => !v);
+        window.addEventListener("toggle-events-sidebar", handleToggleSidebar);
+        return () => window.removeEventListener("toggle-events-sidebar", handleToggleSidebar);
+    }, []);
+
     const handleEventClick = (event: SpaceEvent) => {
         setSelectedEvent(event === selectedEvent ? null : event);
         if (event.nasaTarget) {
@@ -345,7 +352,7 @@ export default function EventsPage() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.8 }}
                 onClick={() => setSidebarOpen(v => !v)}
-                className="absolute top-24 right-6 z-[60] glass-card glass-card-glow rounded-full px-5 py-2.5 flex items-center gap-3 text-white/60 hover:text-white transition-colors"
+                className="absolute top-24 right-6 z-[60] glass-card glass-card-glow rounded-full px-5 py-2.5 hidden md:flex items-center gap-3 text-white/60 hover:text-white transition-colors"
             >
                 <span className="font-grotesk text-[9px] uppercase tracking-[0.4em]">
                     {sidebarOpen ? "Hide Events" : "Show Events"}

@@ -63,17 +63,28 @@ export default function Navbar() {
                     </Link>
                 </div>
 
-                {/* Live indicator dot */}
-                <div className="flex items-center gap-2 relative z-10">
+                {/* Live indicator dot (desktop) */}
+                <div className="hidden md:flex items-center gap-2 relative z-10">
                     <motion.div
                         animate={{ opacity: [1, 0.2, 1] }}
                         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                         className="w-1.5 h-1.5 rounded-full bg-white/40"
                     />
-                    <span className="font-grotesk text-[10px] uppercase tracking-[0.3em] text-white/20 hidden md:block">
+                    <span className="font-grotesk text-[10px] uppercase tracking-[0.3em] text-white/20">
                         Live
                     </span>
                 </div>
+
+                {/* Mobile Hamburger toggle for Events Sidebar */}
+                <button
+                    onClick={() => window.dispatchEvent(new Event('toggle-events-sidebar'))}
+                    className="md:hidden relative z-10 w-8 h-8 flex flex-col justify-center items-center gap-1.5 text-white/60 hover:text-white transition-colors"
+                    aria-label="Toggle Events Sidebar"
+                >
+                    <span className="w-5 h-[1px] bg-current" />
+                    <span className="w-5 h-[1px] bg-current" />
+                    <span className="w-5 h-[1px] bg-current" />
+                </button>
             </div>
         </motion.nav>
     );
