@@ -15,6 +15,10 @@ type SpaceEvent = {
     details: string;
     peakRate?: string; // meteors per hour
     visibility?: string;
+    visibleRegions?: string; // region where visible
+    invisibleRegions?: string; // countries which wont be able to see
+    visibilityTimeframe?: string; // when to when
+    nakedEyeVisibility?: string; // visible to naked eye
     nasaTarget?: string; // NASA Eyes hash target to fly to
 };
 
@@ -29,6 +33,10 @@ const EVENTS: SpaceEvent[] = [
         description: "Six-Planet Grand Parade",
         details: "Mercury, Venus, Neptune, Saturn, Uranus & Jupiter align in a sweeping arc across the evening sky after sunset. Four are visible to the naked eye.",
         visibility: "Evening sky, 30 min after sunset",
+        visibleRegions: "Worldwide, assuming clear skies and an unobstructed horizon",
+        invisibleRegions: "None specifically, though polar regions may have difficulty depending on the season",
+        visibilityTimeframe: "About 30 to 45 minutes after sunset",
+        nakedEyeVisibility: "Yes (Mercury, Venus, Saturn, Jupiter); No (Neptune, Uranus require binoculars)",
         nasaTarget: "saturn",
     },
     {
@@ -40,6 +48,10 @@ const EVENTS: SpaceEvent[] = [
         details: "One of the oldest known meteor showers. Origins from comet Thatcher dust trail. The waxing crescent moon sets early, providing ideal dark skies.",
         peakRate: "10–20 meteors/hr",
         visibility: "Northern Hemisphere, after midnight",
+        visibleRegions: "Northern Hemisphere (best viewing)",
+        invisibleRegions: "Deep Southern Hemisphere (e.g., Antarctica, southernmost South America)",
+        visibilityTimeframe: "Late evening until dawn",
+        nakedEyeVisibility: "Yes",
         nasaTarget: "earth",
     },
     {
@@ -51,6 +63,10 @@ const EVENTS: SpaceEvent[] = [
         details: "Debris from Halley's Comet. At peak, southern hemisphere observers can see up to 50 meteors/hr. Northern viewers see a lower rate.",
         peakRate: "20–50 meteors/hr",
         visibility: "Best from Southern Hemisphere",
+        visibleRegions: "Southern Hemisphere and near the equator",
+        invisibleRegions: "Far Northern latitudes (e.g., Canada, Northern Europe will see very few)",
+        visibilityTimeframe: "Pre-dawn hours (around 2:00 AM until dawn)",
+        nakedEyeVisibility: "Yes",
         nasaTarget: "earth",
     },
     {
@@ -62,6 +78,10 @@ const EVENTS: SpaceEvent[] = [
         details: "2026 is an exceptional year for Perseids. The new moon phase guarantees perfectly dark skies. Debris from comet Swift-Tuttle. One of the most spectacular annual showers.",
         peakRate: "50–100 meteors/hr",
         visibility: "Northern Hemisphere, after midnight",
+        visibleRegions: "Northern Hemisphere",
+        invisibleRegions: "Southern Hemisphere (south of about 30 degrees South latitude, e.g., southern parts of Australia/Chile)",
+        visibilityTimeframe: "Midnight to dawn",
+        nakedEyeVisibility: "Yes",
         nasaTarget: "earth",
     },
     {
@@ -72,6 +92,10 @@ const EVENTS: SpaceEvent[] = [
         description: "Full Wolf Supermoon",
         details: "The January full moon rises as a Supermoon, appearing up to 14% larger and 30% brighter than a typical full moon. Known as the Wolf Moon.",
         visibility: "Worldwide, all night",
+        visibleRegions: "Worldwide",
+        invisibleRegions: "None (visible everywhere the moon rises)",
+        visibilityTimeframe: "Dusk to dawn (all night)",
+        nakedEyeVisibility: "Yes",
         nasaTarget: "earth",
     },
     {
@@ -82,6 +106,10 @@ const EVENTS: SpaceEvent[] = [
         description: "Full Beaver Supermoon",
         details: "November's full moon reaches perigee, making it appear dramatically enlarged. The Beaver Moon marks the beginning of winter stargazing season.",
         visibility: "Worldwide, all night",
+        visibleRegions: "Worldwide",
+        invisibleRegions: "None",
+        visibilityTimeframe: "Dusk to dawn (all night)",
+        nakedEyeVisibility: "Yes",
         nasaTarget: "earth",
     },
     {
@@ -92,6 +120,10 @@ const EVENTS: SpaceEvent[] = [
         description: "Full Cold Supermoon",
         details: "A rare Christmas Eve Supermoon. The December Cold Moon reaches its closest point to Earth, dominating the winter solstice sky.",
         visibility: "Worldwide, all night",
+        visibleRegions: "Worldwide",
+        invisibleRegions: "None",
+        visibilityTimeframe: "Dusk to dawn (all night)",
+        nakedEyeVisibility: "Yes",
         nasaTarget: "earth",
     },
     {
@@ -103,6 +135,10 @@ const EVENTS: SpaceEvent[] = [
         details: "Fast and bright meteors from Halley's Comet debris. Often produce fireballs. A waxing gibbous moon interferes in the evening but skies darken after midnight.",
         peakRate: "10–20 meteors/hr",
         visibility: "Both hemispheres, after midnight",
+        visibleRegions: "Worldwide (both hemispheres)",
+        invisibleRegions: "None specifically, though extreme poles may have viewing challenges",
+        visibilityTimeframe: "Midnight to dawn",
+        nakedEyeVisibility: "Yes",
         nasaTarget: "earth",
     },
     {
@@ -114,6 +150,10 @@ const EVENTS: SpaceEvent[] = [
         details: "The most prolific meteor shower of the year. Peculiarly, it originates not from a comet but from the asteroid 3200 Phaethon. The waxing crescent moon sets early providing ideal conditions.",
         peakRate: "50–75 meteors/hr",
         visibility: "Both hemispheres, all night",
+        visibleRegions: "Worldwide (best in Northern Hemisphere)",
+        invisibleRegions: "Antarctica (due to continuous daylight during polar summer)",
+        visibilityTimeframe: "9 PM to dawn",
+        nakedEyeVisibility: "Yes",
         nasaTarget: "earth",
     },
     {
@@ -124,6 +164,10 @@ const EVENTS: SpaceEvent[] = [
         description: "Blood Moon — Total Lunar Eclipse",
         details: "The Moon passes completely into Earth's shadow, turning a deep copper red — the Blood Moon effect. Visible in its entirety across western North America, Oceania, and Asia.",
         visibility: "Western N. America, Oceania, Asia",
+        visibleRegions: "Western North America, Oceania, Eastern Asia, Pacific",
+        invisibleRegions: "Europe, Africa, Western Asia, Eastern South America",
+        visibilityTimeframe: "During the night, lasting a few hours around maximum eclipse",
+        nakedEyeVisibility: "Yes",
         nasaTarget: "earth",
     },
     {
@@ -134,6 +178,10 @@ const EVENTS: SpaceEvent[] = [
         description: "Total Solar Eclipse",
         details: "Path of totality cuts through Greenland, Iceland, and Spain. A rare opportunity for European observers. Viewers outside the path see a partial eclipse.",
         visibility: "Greenland, Iceland, Spain",
+        visibleRegions: "Totality: Greenland, Iceland, Spain. Partial: North America, Europe, NW Africa",
+        invisibleRegions: "South America, Asia, Oceania, Antarctica",
+        visibilityTimeframe: "Daytime, specific to location during the eclipse path",
+        nakedEyeVisibility: "Yes (ONLY with solar viewing glasses; brief totality is naked eye)",
         nasaTarget: "sol",
     },
 ];
@@ -409,6 +457,30 @@ export default function EventsPage() {
                                                             <div className="flex items-start gap-2">
                                                                 <span className="font-grotesk text-[9px] uppercase tracking-wider text-white/30 mt-0.5">Visible</span>
                                                                 <span className="font-grotesk text-[10px] text-white/50 flex-1">{event.visibility}</span>
+                                                            </div>
+                                                        )}
+                                                        {event.visibleRegions && (
+                                                            <div className="flex items-start gap-2">
+                                                                <span className="font-grotesk text-[9px] uppercase tracking-wider text-white/30 mt-0.5">Regions</span>
+                                                                <span className="font-grotesk text-[10px] text-white/50 flex-1">{event.visibleRegions}</span>
+                                                            </div>
+                                                        )}
+                                                        {event.invisibleRegions && (
+                                                            <div className="flex items-start gap-2">
+                                                                <span className="font-grotesk text-[9px] uppercase tracking-wider text-white/30 mt-0.5">Cannot See</span>
+                                                                <span className="font-grotesk text-[10px] text-white/50 flex-1">{event.invisibleRegions}</span>
+                                                            </div>
+                                                        )}
+                                                        {event.visibilityTimeframe && (
+                                                            <div className="flex items-start gap-2">
+                                                                <span className="font-grotesk text-[9px] uppercase tracking-wider text-white/30 mt-0.5">Timeframe</span>
+                                                                <span className="font-grotesk text-[10px] text-white/50 flex-1">{event.visibilityTimeframe}</span>
+                                                            </div>
+                                                        )}
+                                                        {event.nakedEyeVisibility && (
+                                                            <div className="flex items-start gap-2">
+                                                                <span className="font-grotesk text-[9px] uppercase tracking-wider text-white/30 mt-0.5">Naked Eye</span>
+                                                                <span className="font-grotesk text-[10px] text-white/50 flex-1">{event.nakedEyeVisibility}</span>
                                                             </div>
                                                         )}
                                                         <p className="font-grotesk text-[9px] uppercase tracking-wider text-white/20 pt-1">
