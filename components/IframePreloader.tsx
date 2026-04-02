@@ -2,39 +2,63 @@
 
 import { useEffect, useState } from "react";
 
+/**
+ * IframePreloader
+ *
+ * Mounted globally in the root layout so it runs on EVERY page of the site.
+ *
+ * Strategy:
+ *   1. Wait 5 seconds after the page mounts (gives the visible page time to
+ *      fully render and settle without competing for bandwidth/CPU).
+ *   2. Silently render a 1×1px hidden iframe pointing at NASA Eyes on the
+ *      Solar System.  The browser downloads all of NASA's JavaScript bundle,
+ *      WebGL shaders, planet textures, satellite meshes, and star-field data
+ *      straight into the browser's HTTP disk cache.
+ *   3. When the user later navigates to /events, the browser fetches every
+ *      asset from cache instead of the network — near-instant load.
+ *
+ * The iframe is display:none / 1×1px so it never affects layout or UX.
+ * The `loading="eager"` attribute tells the browser to start downloading
+ * immediately (not lazily) once the component mounts.
+ */
 export default function IframePreloader() {
     const [shouldLoad, setShouldLoad] = useState(false);
 
-    // Delay the preload slightly so we don't block the main thread 
-    // during the critical initial loading of the homepage frames.
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setShouldLoad(true);
-        }, 4000); // Wait 4 seconds after mount to start heavy preloading
+        // 5 second grace period — the visible page loads first, then we cache NASA
+        const timer = setTimeout(() => setShouldLoad(true), 5000);
         return () => clearTimeout(timer);
     }, []);
 
     if (!shouldLoad) return null;
 
     return (
-        <div style={{ display: 'none', width: 0, height: 0, overflow: 'hidden' }} aria-hidden="true">
-            {/* 
-        By mounting these iframes invisibly on the root layout, 
-        the browser aggressively downloads all their assets, WebGL contexts, 
-        and scripts into the disk cache. When the user navigates to /system,
-        the browser simply pulls from the cache, making it load almost instantly.
-      */}
+        <div
+            aria-hidden="true"
+            style={{
+                position: "fixed",
+                bottom: 0,
+                right: 0,
+                width: 1,
+                height: 1,
+                overflow: "hidden",
+                opacity: 0,
+                pointerEvents: "none",
+                zIndex: -1,
+            }}
+        >
+            {/*
+                NASA Eyes on the Solar System — this is the heavy iframe used on /events.
+                Loading it here (invisibly, on every page) pre-warms the browser cache
+                so the /events page loads near-instantly for the user.
+            */}
             <iframe
                 src="https://eyes.nasa.gov/apps/solar-system/?embed=true"
-                width="10"
-                height="10"
+                width="1"
+                height="1"
                 loading="eager"
-            />
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d100000000!2d0!3d0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sus!4v1715000000000!5m2!1sen!2sus&maptype=satellite"
-                width="10"
-                height="10"
-                loading="eager"
+                title="NASA Eyes Preloader"
+                sandbox="allow-scripts allow-same-origin"
             />
         </div>
     );
