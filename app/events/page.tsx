@@ -625,24 +625,28 @@ export default function EventsPage() {
             </div>
 
             {/* ── Sidebar toggle button ─────────────────────────────────── */}
-            <motion.button
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.8 }}
-                onClick={() => setSidebarOpen(v => !v)}
-                className="absolute top-24 right-6 z-[60] glass-card glass-card-glow rounded-full px-5 py-2.5 hidden md:flex items-center gap-3 text-white/60 hover:text-white transition-colors"
-            >
-                <span className="font-grotesk text-[9px] uppercase tracking-[0.4em]">
-                    {sidebarOpen ? "Hide Events" : "Show Events"}
-                </span>
-                <motion.div
-                    animate={{ rotate: sidebarOpen ? 180 : 0 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                    className="text-xs"
-                >
-                    ›
-                </motion.div>
-            </motion.button>
+            <div className="absolute top-24 left-0 right-0 z-[60] flex justify-center px-4 md:px-10 pointer-events-none">
+                <div className="w-full max-w-6xl flex justify-start pointer-events-auto">
+                    <motion.button
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.8 }}
+                        onClick={() => setSidebarOpen(v => !v)}
+                        className="glass-card glass-card-glow rounded-full px-5 py-2.5 hidden md:flex items-center gap-3 text-white/60 hover:text-white transition-colors"
+                    >
+                        <span className="font-grotesk text-[9px] uppercase tracking-[0.4em]">
+                            {sidebarOpen ? "Hide Events" : "Show Events"}
+                        </span>
+                        <motion.div
+                            animate={{ rotate: sidebarOpen ? 180 : 0 }}
+                            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                            className="text-xs"
+                        >
+                            ›
+                        </motion.div>
+                    </motion.button>
+                </div>
+            </div>
 
             {/* ── RIGHT SIDEBAR ──────────────────────────────────────────── */}
             <AnimatePresence>
