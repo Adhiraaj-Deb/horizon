@@ -626,7 +626,7 @@ export default function EventsPage() {
 
             {/* ── Sidebar toggle button ─────────────────────────────────── */}
             <div className="absolute top-24 left-0 right-0 z-[60] flex justify-center px-4 md:px-10 pointer-events-none">
-                <div className="w-full max-w-6xl flex justify-start pointer-events-auto">
+                <div className="w-full max-w-5xl flex justify-start pointer-events-auto">
                     <motion.button
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}

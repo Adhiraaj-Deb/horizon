@@ -25,7 +25,7 @@ export default function Navbar() {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="fixed top-0 left-0 right-0 z-[100] px-4 md:px-10 pt-5 flex justify-center pointer-events-none"
         >
-            <div className="w-full max-w-6xl pointer-events-auto relative glass-card glass-card-glow rounded-2xl px-6 py-3.5 flex justify-between items-center overflow-hidden scanlines">
+            <div className="w-full max-w-5xl pointer-events-auto relative glass-card glass-card-glow rounded-2xl px-6 py-3.5 flex justify-between items-center overflow-hidden scanlines">
                 {/* Ambient accent glow behind logo */}
                 <div className="ambient-spot w-40 h-40 -left-10 -top-10 opacity-[0.04]"
                     style={{ background: "white" }} />
