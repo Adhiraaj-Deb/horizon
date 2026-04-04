@@ -2,7 +2,20 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef } from "react";
+import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
+
+// CesiumGlobe must be dynamically imported with SSR disabled — Cesium is browser-only
+const CesiumGlobe = dynamic(() => import("@/components/CesiumGlobe"), {
+    ssr: false,
+    loading: () => (
+        <div className="w-full h-full bg-black flex items-center justify-center">
+            <p className="font-grotesk text-[10px] uppercase tracking-[0.5em] text-white/40 animate-pulse">
+                Initialising Globe…
+            </p>
+        </div>
+    ),
+});
 
 type ViewMode = "system" | "earth";
 
@@ -66,16 +79,17 @@ export default function SystemPage() {
                             onLoad={() => setLoading(false)}
                         />
                     ) : (
-                        <motion.iframe
+                        <motion.div
                             key="earth"
                             initial={{ opacity: 0, scale: 1.05 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0 }}
                             transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
-                            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d100000000!2d0!3d0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sus!4v1715000000000!5m2!1sen!2sus&maptype=satellite"
-                            className="w-full h-full border-none outline-none"
-                            onLoad={() => setLoading(false)}
-                        />
+                            className="w-full h-full"
+                            onAnimationComplete={() => setLoading(false)}
+                        >
+                            <CesiumGlobe />
+                        </motion.div>
                     )}
                 </AnimatePresence>
             </div>
