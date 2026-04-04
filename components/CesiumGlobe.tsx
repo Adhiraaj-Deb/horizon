@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-// We must tell Cesium where its static assets live BEFORE importing anything from cesium
-// This has to be set at module-evaluation time (not inside useEffect)
+// Initialize global config before script executes
 if (typeof window !== "undefined") {
     (window as any).CESIUM_BASE_URL = "/cesium/";
 }
@@ -16,51 +15,59 @@ export default function CesiumGlobe() {
     useEffect(() => {
         if (!containerRef.current || viewerRef.current) return;
 
-        let viewer: any = null;
+        let script: HTMLScriptElement | null = null;
+        let link: HTMLLinkElement | null = null;
 
-        async function initCesium() {
+        const loadCesium = async () => {
             try {
-                // Dynamically import cesium 
-                const CesiumModule = await import("cesium");
-                
-                // Webpack/NextJS dynamic imports sometimes wrap the module in `.default`
-                const Cesium = CesiumModule.Viewer ? CesiumModule : (CesiumModule as any).default;
-
-                if (!Cesium || !Cesium.Viewer) {
-                    throw new Error("Cesium failed to load correctly from the module.");
+                // 1. Load CSS natively
+                if (!document.querySelector('link[href*="cesium/Widgets/widgets.css"]')) {
+                    link = document.createElement("link");
+                    link.rel = "stylesheet";
+                    link.href = "/cesium/Widgets/widgets.css";
+                    document.head.appendChild(link);
                 }
 
-                // Load Cesium's widgets CSS dynamically
-                await import(/* webpackIgnore: true */ "/cesium/Widgets/widgets.css" as any)
-                    .catch(() => {
-                        if (!document.querySelector('link[href*="cesium/Widgets"]')) {
-                            const link = document.createElement("link");
-                            link.rel = "stylesheet";
-                            link.href = "/cesium/Widgets/widgets.css";
-                            document.head.appendChild(link);
-                        }
-                    });
+                // 2. Load the Cesium engine script natively (bypasses Next.js Webpack completely)
+                await new Promise<void>((resolve, reject) => {
+                    if ((window as any).Cesium) {
+                        resolve();
+                        return;
+                    }
+                    script = document.createElement("script");
+                    script.src = "/cesium/Cesium.js";
+                    script.onload = () => resolve();
+                    script.onerror = () => reject(new Error("Failed to load Cesium engine script."));
+                    document.body.appendChild(script);
+                });
+
+                const Cesium = (window as any).Cesium;
+                
+                if (!Cesium || !Cesium.Viewer) {
+                    throw new Error("Cesium object not found on window.");
+                }
 
                 Cesium.Ion.defaultAccessToken = process.env.NEXT_PUBLIC_CESIUM_TOKEN ?? "";
 
-                viewer = new Cesium.Viewer(containerRef.current!, {
+                // Initialize Viewer
+                const viewer = new Cesium.Viewer(containerRef.current!, {
                     terrain: Cesium.Terrain.fromWorldTerrain(),
-                    animation: false,         
-                    baseLayerPicker: false,   
-                    fullscreenButton: false,  
-                    geocoder: false,          
-                    homeButton: false,        
-                    infoBox: false,           
-                    sceneModePicker: false,   
+                    animation: false,
+                    baseLayerPicker: false,
+                    fullscreenButton: false,
+                    geocoder: false,
+                    homeButton: false,
+                    infoBox: false,
+                    sceneModePicker: false,
                     selectionIndicator: false,
-                    timeline: false,          
+                    timeline: false,
                     navigationHelpButton: false,
                     navigationInstructionsInitiallyVisible: false,
                 });
 
                 viewerRef.current = viewer;
 
-                // Lighting
+                // Configure aesthetics
                 try {
                     viewer.scene.globe.enableLighting = true;
                 } catch(e) {}
@@ -73,7 +80,7 @@ export default function CesiumGlobe() {
                     console.warn("OSM Buildings failed to load:", e);
                 }
 
-                // Start camera looking at Earth
+                // Initial Camera Position
                 viewer.camera.flyTo({
                     destination: Cesium.Cartesian3.fromDegrees(78.9629, 20.5937, 18_000_000),
                     orientation: {
@@ -81,21 +88,25 @@ export default function CesiumGlobe() {
                         pitch: Cesium.Math.toRadians(-90),
                         roll: 0,
                     },
-                    duration: 0, 
+                    duration: 0,
                 });
-            } catch (err: any) {
-                console.error("Cesium init error:", err);
-                setErrorMsg(err.message || "Failed to initialize the 3D globe.");
-            }
-        }
 
-        initCesium();
+            } catch (err: any) {
+                console.error("Cesium Initialisation Error:", err);
+                setErrorMsg(err.message || "Unknown error creating globe.");
+            }
+        };
+
+        loadCesium();
 
         return () => {
             if (viewerRef.current && !viewerRef.current.isDestroyed()) {
                 viewerRef.current.destroy();
                 viewerRef.current = null;
             }
+            // Cleanup script tags if component unmounts quickly
+            if (script && document.body.contains(script)) document.body.removeChild(script);
+            // We usually keep the CSS to avoid unstyled flashes later
         };
     }, []);
 
