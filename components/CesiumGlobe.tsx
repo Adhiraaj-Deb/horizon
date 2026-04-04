@@ -47,7 +47,9 @@ export default function CesiumGlobe() {
                     throw new Error("Cesium object not found on window.");
                 }
 
-                Cesium.Ion.defaultAccessToken = process.env.NEXT_PUBLIC_CESIUM_TOKEN ?? "";
+                // Hardcoding the frontend token since Vercel builds lack the local .env file.
+                // Note: Cesium tokens are public by design; you restrict them to your domain on the Cesium dashboard.
+                Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiMDZmY2Y4MS00ZGI2LTQyMDYtYTI0OC0wMTc0MGQzMTdkMmUiLCJpZCI6NDEzNjExLCJpYXQiOjE3NzUyODY3MjZ9.1SFEy2mNkAcqeyS6DAOO5BfDC115kF82WTUGFUj8ieY";
 
                 // Initialize Viewer
                 const viewer = new Cesium.Viewer(containerRef.current!, {
