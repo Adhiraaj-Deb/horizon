@@ -122,7 +122,7 @@ export default function Footer() {
                         transition={{ duration: 1, delay: 1 }}
                         className="font-grotesk text-[9px] uppercase tracking-[0.4em] text-white/20"
                     >
-                        Made by Studio Synalpy
+                        Made by Adhiraaj Deb
                     </motion.p>
                 </div>
             </div>
